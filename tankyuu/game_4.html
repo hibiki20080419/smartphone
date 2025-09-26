@@ -3,31 +3,43 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ブロック崩し（アイテムでボール増加・タッチ対応）</title>
+  <title>ブロック崩し（アイテムでボール増加・480px幅）</title>
   <style>
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Hiragino Kaku Gothic ProN',Meiryo,sans-serif;background:#0b1220;color:#e6eef8}
+    html,body{height:100%;margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,'Hiragino Kaku Gothic ProN',Meiryo,sans-serif;
+      background:#0b1220;color:#e6eef8}
     .wrap{display:flex;flex-direction:column;align-items:center;padding:18px}
-    canvas{background:linear-gradient(180deg,#071428 0%, #082737 100%);border-radius:8px;box-shadow:0 8px 30px rgba(2,8,23,.6);touch-action:none}
-    .hud{width:720px;max-width:100%;display:flex;justify-content:space-between;margin:12px 0}
+    canvas{
+      background:linear-gradient(180deg,#071428 0%, #082737 100%);
+      border-radius:8px;
+      box-shadow:0 8px 30px rgba(2,8,23,.6);
+      touch-action:none;
+    }
+    .hud{
+      width:480px; /* 横幅を480pxに統一 */
+      display:flex;
+      justify-content:space-between;
+      margin:12px 0
+    }
     .btn{background:#1f6feb;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
     .info{font-size:14px;opacity:.9}
     .center{display:flex;gap:8px}
     #message{margin-top:12px;font-weight:700}
     #bigClear, #bigOver{
       position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      font-size:72px;font-weight:900;text-shadow:0 0 12px rgba(0,0,0,0.8);
-      display:none;pointer-events:none;
-      white-space:nowrap;
+      font-size:64px;font-weight:900;text-shadow:0 0 12px rgba(0,0,0,0.8);
+      display:none;pointer-events:none;white-space:nowrap;
     }
     #bigClear{color:#ffd166;}
     #bigOver{color:#ff4d4d;}
+    p{max-width:480px;opacity:.9}
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <h2>ブロック崩し — アイテムでボールが増える（スマホ対応）</h2>
+    <h2>ブロック崩し — アイテムでボールが増える（480px幅）</h2>
     <div class="hud">
       <div class="info">ボール: <span id="ballCount">1</span>　/　ブロック残り: <span id="blocksLeft">0</span></div>
       <div class="center">
@@ -37,12 +49,12 @@
     </div>
 
     <div style="position:relative">
-      <canvas id="game" width="720" height="480"></canvas>
+      <canvas id="game" width="480" height="360"></canvas>
       <div id="bigClear">CLEAR!</div>
       <div id="bigOver">GAME OVER</div>
     </div>
     <div id="message"></div>
-    <p style="max-width:720px;opacity:.9">
+    <p>
       操作: マウス移動・← → / A D・スマホは指スライド。<br>
       ブロックを壊すと確率でアイテムが落ちます。アイテムを取るとボールが増えます。全てのブロックを壊すとクリア。
     </p>
@@ -65,15 +77,15 @@
   let running = false;
   let paused = false;
 
-  const paddle = { w: 100, h: 14, x: (W-100)/2, y: H-40, speed: 8 };
+  const paddle = { w: 80, h: 14, x: (W-80)/2, y: H-30, speed: 6 };
 
-  const cols = 10;
+  const cols = 8;
   const rows = 5;
-  const blockPadding = 8;
-  const blockOffsetTop = 60;
-  const blockOffsetLeft = 35;
+  const blockPadding = 6;
+  const blockOffsetTop = 50;
+  const blockOffsetLeft = 25;
   const blockWidth = Math.floor((W - blockOffsetLeft*2 - (cols-1)*blockPadding)/cols);
-  const blockHeight = 20;
+  const blockHeight = 18;
 
   let blocks = [];
   let balls = [];
@@ -83,7 +95,11 @@
     blocks = [];
     for(let r=0;r<rows;r++){
       for(let c=0;c<cols;c++){
-        blocks.push({x:blockOffsetLeft + c*(blockWidth+blockPadding), y:blockOffsetTop + r*(blockHeight+blockPadding), w:blockWidth, h:blockHeight, hit:false});
+        blocks.push({
+          x:blockOffsetLeft + c*(blockWidth+blockPadding),
+          y:blockOffsetTop + r*(blockHeight+blockPadding),
+          w:blockWidth, h:blockHeight, hit:false
+        });
       }
     }
     updateBlocksLeft();
@@ -92,7 +108,7 @@
   }
 
   function spawnBall(x, y, vx, vy){
-    balls.push({x:x, y:y, r:8, vx:vx, vy:vy, stuck:false});
+    balls.push({x:x, y:y, r:7, vx:vx, vy:vy});
     updateBallCount();
   }
 
@@ -145,7 +161,7 @@
           updateBlocksLeft();
           b.vy *= -1;
           if(Math.random() < 0.2){
-            items.push({x: bl.x + bl.w/2 - 10, y: bl.y + bl.h + 6, w:20, h:20, vy:2, type:'extraBall'});
+            items.push({x: bl.x + bl.w/2 - 10, y: bl.y + bl.h + 6, w:20, h:20, vy:2});
           }
           break;
         }
@@ -238,7 +254,7 @@
     paddle.x = Math.min(Math.max(mouseX - paddle.w/2, 0), W - paddle.w);
   });
 
-  // ★スマホのタッチ操作を追加
+  // タッチ操作
   canvas.addEventListener('touchmove', e => {
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
