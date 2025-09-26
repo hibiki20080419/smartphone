@@ -3,7 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>スマホ専用ページ</title>
+  <style>
+    /* スマホ前提の共通スタイル */
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 18px;
+      padding: 5px;
+      background-color: #f0f0f0;
+      flex-wrap: wrap;
+    }
+
+    header h1 {
+      margin: 5px 0 0 0;
+      font-size: 14px;
+      text-align: left;
+      flex: 1;
+    }
+
+    header .logo {
+      font-size: 20px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    header .takibi {
+      margin-left: 10px;
+    }
+
+    main {
+      min-height: 500px;
+      margin-top: 10px;
+      background-image: url(tankyuu/title_images/syoumenn.jpg);
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      position: relative;
+      padding: 20px;
+    }
+
+    /* ボタン風スタイル（スマホ用） */
+    main .btn {
+      display: inline-block;
+      background-color: #a2d7dd;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: 0.3s;
+      margin-top: 80%;
+      position: relative;
+      z-index: 2;
+    }
+
+    main .btn:hover {
+      background-color: #88c5cc;
+      transform: scale(1.05);
+    }
+
+    /* 春日部キャラ */
+    .girl {
+      position: absolute;
+      max-width: 60%;
+      height: auto;
+      bottom: 5%;
+      right: 1%;
+      z-index: 3;
+    }
+
+    /* 吹き出し */
+    .fukidasi {
+      position: absolute;
+      max-width: 80%;
+      height: auto;
+      top: 40%;
+      right: 15%;
+      z-index: 4;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,120 +106,6 @@
   <!-- 画像は main の外でもOK。position指定で前面に持ってくる -->
   <img class="fukidasi" src="tankyuu/title_images/fukidasi.png">
   <img class="girl" src="tankyuu/title_images/kasukabe.png">
-
 </body>
-
-<style>
-/* 共通スタイル */
-body {
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* スマホでも崩れない */
-  font-size: 24px;
-  padding: 5px;
-  background-color: #f0f0f0;
-  flex-wrap: wrap;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 18px;
-  flex: 1;
-  text-align: right;
-}
-
-header .logo {
-  font-size: 24px;
-  font-weight: bold;
-  margin-right: 10px;
-}
-
-header .takibi {
-  margin-left: 10px;
-}
-
-main {
-  min-height: 500px;
-  margin-top: 10px;
-  background-image: url(tankyuu/title_images/syoumenn.jpg);
-  background-size: cover;
-  background-position: center;
-  text-align: center;
-  position: relative;
-  padding: 20px;
-}
-
-/* ボタン風スタイル */
-main .btn {
-  display: inline-block;
-  background-color: #a2d7dd;
-  color: #ffffff;
-  font-size: 28px;
-  font-weight: bold;
-  padding: 12px 30px;
-  border-radius: 12px;
-  text-decoration: none;
-  transition: 0.3s;
-  margin-top: 80%;
-  position: relative;
-  z-index: 2;
-}
-
-main .btn:hover {
-  background-color: #88c5cc;
-  transform: scale(1.05);
-}
-
-/* 春日部キャラ */
-.girl {
-  position: absolute;
-  max-width: 35%;
-  height: auto;
-  bottom: 10px;
-  right: 1%;
-  z-index: 3;
-}
-
-/* 吹き出し */
-.fukidasi {
-  position: absolute;
-  max-width: 40%;
-  height: auto;
-  top: 30%;
-  left: 20%;
-  z-index: 4;
-}
-
-/* スマホ向け調整 */
-@media (max-width: 768px) {
-  header {
-    font-size: 18px;
-  }
-  header h1 {
-    font-size: 14px;
-    text-align: left;
-    margin-top: 5px;
-  }
-  main .btn {
-    font-size: 20px;
-    margin-top: 80%;
-    padding: 10px 20px;
-  }
-  .girl {
-    max-width: 60%;
-    bottom: 5%;
-    right: 1%;
-  }
-  .fukidasi {
-    max-width: 80%;
-    top: 40%;
-    right: 15%;
-  }
-}
-</style>
 </html>
+
