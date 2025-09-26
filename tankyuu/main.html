@@ -34,30 +34,53 @@
       <style>
       
       header {
-display: flex;
-align-items: center;   /* 縦方向を中央にそろえる */
-font-size: 30px;
-padding: 5px;
-background-color: #f0f0f0;
-}
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 横並びを自動で調整 */
+    padding: 10px 16px;
+    background-color: #f0f0f0;
+    flex-wrap: wrap; /* スマホで折り返せるように */
+  }
 
-header h2 {
-font-size: 20px;
- margin: 0 0 0 900px;
-}
+  header .logo {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+  }
 
-header .logo {
-font-size: 28px;
-font-weight: bold;
-margin: 0 10px 0 0;   /* 右に少し余白を追加 */
-display: inline-flex;
-align-items: center;
-}
+  header .takibi {
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+  }
 
-header .takibi {
-width: 30px;   /* アイコンを小さめに調整 */
-height: 30px;
-}
+  header h1 {
+    margin: 0;
+    font-size: 16px;
+    flex: 1;
+    text-align: right; /* PCでは右寄せ */
+  }
+
+  /* スマホ用の調整 */
+  @media (max-width: 768px) {
+    header {
+      font-size: 16px;
+      justify-content: center; /* 中央寄せに */
+      text-align: center;
+    }
+
+    header .logo {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    header h1 {
+      font-size: 14px;
+      text-align: center;
+      flex: 0 0 100%; /* 下の段に表示 */
+      margin-top: 6px;
+    }
+  }
       
 body{
   background-image:url(goldmine.jpg);
