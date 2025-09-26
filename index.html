@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <header>
+    <p class="logo">Home Cave</p>
+    <img class="takibi" src="cave.png" width="40" height="40">
+    <h1>あなたと共にあるサイト！</h1>
+  </header>
+
+  <main>
+    <p><a href="main.html" class="btn">スタート</a></p>
+  </main>
+
+  <!-- 画像は main の外でもOK。position指定で前面に持ってくる -->
+  <img class="fukidasi" src="title_images/fukidasi.png">
+  <img class="girl" src="title_images/kasukabe.png">
+
+</body>
+
+<style>
+/* 共通スタイル */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* スマホでも崩れない */
+  font-size: 24px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 18px;
+  flex: 1;
+  text-align: right;
+}
+
+header .logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+header .takibi {
+  margin-left: 10px;
+}
+
+main {
+  min-height: 500px;
+  margin-top: 10px;
+  background-image: url(title_images/syoumenn.jpg);
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  position: relative;
+  padding: 20px;
+}
+
+/* ボタン風スタイル */
+main .btn {
+  display: inline-block;
+  background-color: #a2d7dd;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: bold;
+  padding: 12px 30px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: 0.3s;
+  margin-top: 60%;
+  position: relative;
+  z-index: 2;
+}
+
+main .btn:hover {
+  background-color: #88c5cc;
+  transform: scale(1.05);
+}
+
+/* 春日部キャラ */
+.girl {
+  position: absolute;
+  max-width: 35%;
+  height: auto;
+  bottom: 10px;
+  right: 5%;
+  z-index: 3;
+}
+
+/* 吹き出し */
+.fukidasi {
+  position: absolute;
+  max-width: 40%;
+  height: auto;
+  top: 20%;
+  left: 30%;
+  z-index: 4;
+}
+
+/* スマホ向け調整 */
+@media (max-width: 768px) {
+  header {
+    font-size: 18px;
+  }
+  header h1 {
+    font-size: 14px;
+    text-align: left;
+    margin-top: 5px;
+  }
+  main .btn {
+    font-size: 20px;
+    margin-top: 40%;
+    padding: 10px 20px;
+  }
+  .girl {
+    max-width: 60%;
+    bottom: 5%;
+    right: 20%;
+  }
+  .fukidasi {
+    max-width: 70%;
+    top: 10%;
+    left: 15%;
+  }
+}
+</style>
+</html>
