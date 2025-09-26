@@ -2,128 +2,150 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>厳選写真集</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>厳選写真集（スマホ縦持ち用）</title>
   <style>
-    :root {
-      --overlay: rgba(0,0,0,.82);
-      --radius: 14px;
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      width: 100vw;
+      max-width: 430px; /* iPhone Pro Max 程度まで対応 */
+      margin: 0 auto;
+      background: #fff;
+      overflow-x: hidden;
     }
 
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans JP, sans-serif; margin: 0; }
-    .page { padding: 24px; max-width: 1200px; margin: 0 auto; }
-
-    h1 { font-size: 20px; margin: 0 0 12px; }
-    p { color: #444; margin: 0 0 18px; }
-
-    /* ギャラリー */
-    .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
-    .thumb-wrap { position: relative; border-radius: var(--radius); overflow: hidden; background: #f2f2f2; }
-    .thumb { width: 100%; height: 120px; object-fit: cover; display: block; cursor: zoom-in; transition: transform .2s ease; }
-    .thumb:active { transform: scale(.98); }
-
-    /* ライトボックス */
-    .lightbox { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(2px); background: var(--overlay); z-index: 9999; }
-    .lightbox.open { display: flex; animation: fadeIn .12s ease-out; }
-    @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
-
-    .viewer { position: relative; max-width: 92vw; max-height: 92vh; }
-    .viewer img { display: block; max-width: 92vw; max-height: 92vh; border-radius: var(--radius); box-shadow: 0 10px 40px rgba(0,0,0,.35); user-select: none; -webkit-user-drag: none; }
-
-    /* 閉じるボタン */
-    .close { position: absolute; top: -12px; right: -12px; width: 44px; height: 44px; border: none; border-radius: 999px; cursor: pointer; background: #fff; box-shadow: 0 6px 30px rgba(0,0,0,.25); display: grid; place-items: center; font-size: 22px; line-height: 1; }
-    .close:focus { outline: 3px solid #3b82f6; }
-
-    /* 前後ナビ（左右クリック領域） */
-    .nav { position: fixed; top: 0; bottom: 0; width: 30%; cursor: pointer; }
-    .nav.prev { left: 0; }
-    .nav.next { right: 0; }
-    .nav::after { content: ''; position: absolute; top: 50%; width: 14px; height: 14px; border-right: 3px solid #fff; border-bottom: 3px solid #fff; transform: translateY(-50%) rotate(-45deg); opacity: .75; }
-    .nav.prev::after { left: 22px; transform: translateY(-50%) rotate(135deg); }
-    .nav.next::after { right: 22px; }
-
-    /* 画面外クリックで閉じるための背景 */
-    .backdrop { position: absolute; inset: 0; }
-
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-
-    /* スクロール固定 */
-    body.no-scroll { overflow: hidden; }
-  
+    /* ヘッダー */
     header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* 横並びを自動で調整 */
-    padding: 10px 16px;
-    background-color: #f0f0f0;
-    flex-wrap: wrap; /* スマホで折り返せるように */
-  }
-
-  header .logo {
-    font-size: 22px;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  header .takibi {
-    width: 32px;
-    height: 32px;
-    margin-left: 8px;
-  }
-
-  header h1 {
-    margin: 0;
-    font-size: 16px;
-    flex: 1;
-    text-align: right; /* PCでは右寄せ */
-  }
-
-  /* スマホ用の調整 */
-  @media (max-width: 768px) {
-    header {
-      font-size: 16px;
-      justify-content: center; /* 中央寄せに */
-      text-align: center;
+      width: 100%;
+      height: 60px;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      box-sizing: border-box;
     }
-
     header .logo {
       font-size: 20px;
-      margin-bottom: 4px;
+      font-weight: bold;
     }
-
+    header .takibi {
+      width: 32px;
+      height: 32px;
+      margin-left: 6px;
+    }
     header h1 {
       font-size: 14px;
-      text-align: center;
-      flex: 0 0 100%; /* 下の段に表示 */
-      margin-top: 6px;
+      margin-left: auto;
     }
-  }
-  
-  
+
+    /* ページ全体 */
+    .page {
+      padding: 12px;
+    }
+    h1 {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    p {
+      font-size: 14px;
+      margin: 4px 0 12px;
+    }
+
+    /* ギャラリー（スマホ縦で2列固定） */
+    .gallery {
+      display: grid;
+      grid-template-columns: 48% 48%;
+      gap: 4%;
+    }
+    .thumb-wrap {
+      width: 100%;
+      height: 120px;
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: zoom-in;
+    }
+
+    /* ライトボックス */
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .lightbox.open { display: flex; }
+
+    .viewer {
+      position: relative;
+      width: 90vw;
+      height: 80vh;
+    }
+    .viewer img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    /* 閉じるボタン */
+    .close {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 20px;
+      background: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* ナビゲーション */
+    .nav {
+      position: absolute;
+      top: 0;
+      width: 30%;
+      height: 100%;
+    }
+    .nav.prev { left: 0; }
+    .nav.next { right: 0; }
   </style>
 </head>
-
-<header>
-  <p class="logo">Home Cave</p>
-  <img class="takibi" src="cave.png" width="40" height="40">
-  <h1>あなたと共にあるサイト！</h1>
-</header>
-
 <body>
+  <header>
+    <p class="logo">Home Cave</p>
+    <img class="takibi" src="cave.png" />
+    <h1>あなたと共にあるサイト！</h1>
+  </header>
+
   <div class="page">
     <h1>注目！厳選画像集</h1>
-    <p>気になる画像をクリックまたはタップ！</p>
+    <p>気になる画像をタップ！</p>
 
     <div class="gallery" id="gallery">
-      <!-- 例: srcには軽いサムネイル、data-fullには拡大用の画像（同じでも可）を指定 -->
-      <div class="thumb-wrap"><img class="thumb" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=600&auto=format&fit=crop" data-full="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop" alt="海の風景" loading="lazy"></div>
-      <div class="thumb-wrap"><img class="thumb" src="picture_images/inaka.jpg" alt="田舎" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/inaka.jpg" alt="田舎"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/yorunoyakei.jpg" alt="夜景"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/ramenn.jpg" alt="ラーメン"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/okinawa.jpg" alt="沖縄"></div>
+    <div class="thumb-wrap"><img class="thumb" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=600&auto=format&fit=crop" data-full="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop" alt="海の風景" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=600&auto=format&fit=crop" data-full="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop" alt="森の朝" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/yorunoyakei.jpg" alt="街の夜景" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/padirakku.jpg" alt="パラディック洞窟" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/kamakura.jpg" alt="鎌倉" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/swiss.jpg" alt="スイス" loading="lazy"></div>
-      <div class="thumb-wrap"><img class="thumb" src="picture_images/okinawa.jpg" alt="沖縄道路" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/hokkaidou.jpg" alt="北海道" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/kyoto.jpg" alt="京都" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/torii.jpg" alt="鳥居" loading="lazy"></div>
@@ -140,7 +162,6 @@
       <div class="thumb-wrap"><img class="thumb" src="picture_images/kabigonn.jpg" alt="カビゴン" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/uyuni.jpg" alt="ウユニ塩湖" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/dragonn.jpg" alt="ドラゴン" loading="lazy"></div>
-      <div class="thumb-wrap"><img class="thumb" src="picture_images/ramenn.jpg" alt="ラーメン" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/ramenn2.jpg" alt="ラーメン" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/hamburger.jpg" data-full="ハンバーガー.jpg" alt="ハンバーガー" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/guratann.jpg" alt="グラタン" loading="lazy"></div>
@@ -166,103 +187,58 @@
       <div class="thumb-wrap"><img class="thumb" src="picture_images/furirenn2.jpg" alt="フリーレン" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/gojyou.jpg" alt="五条" loading="lazy"></div>
       <div class="thumb-wrap"><img class="thumb" src="picture_images/gojyou2.jpg" alt="五条" loading="lazy"></div>
+    
     </div>
   </div>
 
   <!-- ライトボックス -->
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="画像ビューア">
-    <div class="backdrop" data-action="close" aria-hidden="true"></div>
-
-    <!-- 左右ナビゲーション（クリック領域） -->
-    <div class="nav prev" data-action="prev" aria-hidden="true"></div>
-    <div class="nav next" data-action="next" aria-hidden="true"></div>
-
+  <div class="lightbox" id="lightbox">
     <div class="viewer">
-      <button class="close" id="btnClose" aria-label="閉じる">×</button>
-      <img id="viewerImg" src="" alt="拡大画像" />
-      <span class="sr-only" id="viewerCount"></span>
+      <button class="close" id="btnClose">×</button>
+      <img id="viewerImg" src="" alt="">
+      <div class="nav prev" id="btnPrev"></div>
+      <div class="nav next" id="btnNext"></div>
     </div>
   </div>
 
   <script>
-    // 要素取得
-    const gallery = document.getElementById('gallery');
-    const lightbox = document.getElementById('lightbox');
-    const viewerImg = document.getElementById('viewerImg');
-    const btnClose = document.getElementById('btnClose');
-    const viewerCount = document.getElementById('viewerCount');
+    const gallery = document.getElementById("gallery");
+    const lightbox = document.getElementById("lightbox");
+    const viewerImg = document.getElementById("viewerImg");
+    const btnClose = document.getElementById("btnClose");
+    const btnPrev = document.getElementById("btnPrev");
+    const btnNext = document.getElementById("btnNext");
 
-    // ギャラリー内の画像ノードリストを配列で保持
-    const items = Array.from(gallery.querySelectorAll('img.thumb'));
-    let current = -1; // 現在表示中のインデックス
+    const items = Array.from(gallery.querySelectorAll("img.thumb"));
+    let current = -1;
 
-    function openAt(index) {
-      current = index;
-      const el = items[current];
-      viewerImg.src = el.dataset.full || el.src;
-      viewerImg.alt = el.alt || '拡大画像';
-      viewerCount.textContent = `${current + 1} / ${items.length}`;
-
-      lightbox.classList.add('open');
-      lightbox.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('no-scroll');
-      // 初回フォーカスは閉じるボタンへ
-      btnClose.focus({ preventScroll: true });
+    function openAt(i) {
+      current = i;
+      viewerImg.src = items[i].src;
+      lightbox.classList.add("open");
     }
-
     function closeViewer() {
-      lightbox.classList.remove('open');
-      lightbox.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('no-scroll');
-      viewerImg.removeAttribute('src');
-      // 元のサムネにフォーカスを返す
-      if (items[current]) items[current].focus({ preventScroll: true });
-      current = -1;
+      lightbox.classList.remove("open");
     }
-
     function showNext() {
       if (current < 0) return;
       openAt((current + 1) % items.length);
     }
-
     function showPrev() {
       if (current < 0) return;
       openAt((current - 1 + items.length) % items.length);
     }
 
-    // クリックで開く
     items.forEach((img, i) => {
-      img.setAttribute('tabindex', '0'); // キーボードでもフォーカス
-      img.addEventListener('click', () => openAt(i));
-      img.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openAt(i);
-        }
-      });
+      img.addEventListener("click", () => openAt(i));
     });
-
-    // ライトボックス内の操作
-    lightbox.addEventListener('click', (e) => {
-      const act = e.target.closest('[data-action]')?.dataset.action;
-      if (act === 'close') closeViewer();
-      if (act === 'next') showNext();
-      if (act === 'prev') showPrev();
-    });
-
-    btnClose.addEventListener('click', closeViewer);
-
-    // キーボード操作（Esc/左右）
-    window.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('open')) return;
-      if (e.key === 'Escape') closeViewer();
-      if (e.key === 'ArrowRight') showNext();
-      if (e.key === 'ArrowLeft') showPrev();
-    });
-
-    // 画像のプリロード（体感を良くする）
-    function preload(src) { const img = new Image(); img.src = src; }
-    items.forEach(img => { if (img.dataset.full) preload(img.dataset.full); });
+    btnClose.addEventListener("click", closeViewer);
+    btnNext.addEventListener("click", showNext);
+    btnPrev.addEventListener("click", showPrev);
   </script>
 </body>
 </html>
+
+
+
+   
