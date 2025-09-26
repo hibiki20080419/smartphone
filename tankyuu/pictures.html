@@ -55,12 +55,14 @@
     /* ギャラリー（スマホ縦で2列固定） */
     .gallery {
       display: grid;
-      grid-template-columns: 48% 48%;
-      gap: 4%;
+      grid-template-columns: repeat(4, 1fr);
+      .gallery {
+  column-gap: 8px;
+  row-gap: 6px;
     }
     .thumb-wrap {
       width: 100%;
-      height: 120px;
+      height: 100px;
       background: #eee;
       border-radius: 10px;
       overflow: hidden;
