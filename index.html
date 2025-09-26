@@ -14,33 +14,32 @@
     }
 
     header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 16px;
-      padding: 4px;
-      background-color: #f0f0f0;
-      flex-wrap: nowrap;
-    }
+  display: flex;              /* 横並び */
+  align-items: center;        /* 縦方向中央揃え */
+  justify-content: space-between; /* 両端に配置 */
+  flex-wrap: nowrap;          /* ← 折り返し禁止 */
+  padding: 4px 8px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
 
-    header h1 {
-      margin: 5px 0 0 0;
-      font-size: 14px;
-      text-align: left;
-      flex: unset;          
-  white-space: nowrap;
-      flex: 1;
-    }
+header h1 {
+  margin: 0;
+  font-size: 12px;            /* スマホ用に小さめ */
+  flex: unset;                /* ← 幅を勝手に広げない */
+  white-space: nowrap;        /* ← 改行させない */
+}
 
-    header .logo {
-      font-size: 18px;
-      font-weight: bold;
-      margin-right: 10px;
-    }
+header .logo {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 5px 0 0;
+}
 
-    header .takibi {
-      margin-left: 10px;
-    }
+header .takibi {
+  margin-left: 5px;
+}
+
 
     main {
       min-height: 500px;
