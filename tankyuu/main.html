@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<header>
+    <h1 class="logo">Home Cave</h1>
+    <img class="takibi" src="cave.png" width="60" height="60">
+    <h2>あなたと共にあるサイト！</h2>  
+  </header>   
+
+<body>
+        
+      
+        <div class="block">
+          <p><a href="meigenn4.html">名言診断！</a></p>
+          <p class="desc">あなたの回答に合わせて、元気が出る名言を診断してくれるコーナーです！</p>
+        </div>
+      
+        <div class="block">
+          <p><a href="pictures.html">世界の写真！</a></p>
+          <p class="desc">世界中の美しい景色や瞬間を集めたフォトギャラリーです！</p>
+        </div>
+      
+        <div class="block">
+          <p><a href="game_4.html">ゲーム！</a></p>
+          <p class="desc">遊びながらリフレッシュできるミニゲームです！</p>
+        </div>
+      </body>
+      
+      <style>
+      
+      header {
+display: flex;
+align-items: center;   /* 縦方向を中央にそろえる */
+font-size: 30px;
+padding: 5px;
+background-color: #f0f0f0;
+}
+
+header h2 {
+font-size: 20px;
+ margin: 0 0 0 900px;
+}
+
+header .logo {
+font-size: 28px;
+font-weight: bold;
+margin: 0 10px 0 0;   /* 右に少し余白を追加 */
+display: inline-flex;
+align-items: center;
+}
+
+header .takibi {
+width: 30px;   /* アイコンを小さめに調整 */
+height: 30px;
+}
+      
+body{
+  background-image:url(goldmine.jpg);
+  
+}      
+
+
+
+      body .block {
+        width: 50%;
+        border: 10px solid #a2d7dd;
+        margin: 20px auto;
+        padding: 15px;
+        background-color: white;
+        text-align: center;
+      }
+      
+      /* 診断・写真集・ゲームリンク */
+      body .block a:first-child {
+        font-size: 25px;
+        color:#a2d7dd;
+        font-weight: bold;
+        margin: 0;
+      }
+      
+      /* 説明文 */
+      body .block .desc {
+        font-size: 18px;
+        color: black;
+        margin-top: 10px;
+      }
+      
+      </style>
+      

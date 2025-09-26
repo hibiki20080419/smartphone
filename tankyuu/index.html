@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+      <p class="logo">Home Cave</p>
+      <img class="takibi" src="cave.png" width="40" height="40">
+      <h1>あなたと共にあるサイト！</h1>
+    </header>
+  
+    <main>
+      <p><a href="main.html" class="btn">スタート</a></p>
+    </main>
+  
+    <!-- 画像は main の外でもOK。position指定で前面に持ってくる -->
+    <img class="fukidasi" src="title_images/fukidasi.png">
+    <img class="girl" src="title_images/kasukabe.png">
+  </body>
+  
+  <style>
+  header {
+    display: flex;
+    height:40px;
+    align-items: center;
+    font-size: 30px;
+    padding: 5px;
+    background-color: #f0f0f0;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 20px;
+    padding-left: 900px;
+  }
+  
+  header .logo {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+header.takibi{
+  padding-right: 110px;
+}
+
+  main {
+    height: 750px;
+    margin-top: 10px;
+    background-image: url(title_images/syoumenn.jpg);
+    text-align: center;
+    position: relative; /* 子要素の基準位置になる */
+  }
+  
+  /* ボタン風スタイル */
+  main .btn {
+    display: inline-block;
+    background-color: #a2d7dd;
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: bold;
+    padding: 15px 40px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: 0.3s;
+    margin-top: 500px;
+    position: relative;
+    z-index: 2; /* ボタンを前面に */
+  }
+  
+  /* ホバー時の効果 */
+  main .btn:hover {
+    background-color: #88c5cc;
+    transform: scale(1.05);
+  }
+  
+  /* 春日部キャラ */
+  .girl {
+    position: absolute; /* 重なりを制御するため必須 */
+    height: 500px;
+    top: 340px;  /* 位置は自由に調整 */
+    left: 1100px;
+    z-index: 3;  /* 背景より前、ボタンより前に */
+  }
+  
+  /* 吹き出し */
+  .fukidasi {
+    position: absolute;
+    height:200px;
+    top: 200px;
+    left: 650px;
+    z-index: 4; /* 一番前に表示 */
+  }
+  </style>
+  </html>
+  

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yes/No診断</title>
+  <link rel="stylesheet" href="css/no.3.css" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+  <script>
+    jQuery(function($) {
+      $('.yn-chart a').on('click', function(e) {
+        e.preventDefault();
+        $(this).closest('div').hide();
+        const id = $(this).attr('href');
+        $(id).fadeIn('fast');
+      });
+
+      $('.p-check-btn a').on('click', function(e) {
+        e.preventDefault();
+        $('.yn-chart > div').hide();
+        $('#q1').fadeIn('fast');
+      });
+    });
+  </script>
+
+  <style>
+
+header {
+    display: flex;
+    height:40px;
+    align-items: center;
+    font-size: 30px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    margin-bottom:10px
+  }
+  
+  header h1 {
+    margin: 0px;
+    font-size: 20px;
+    padding-left: 900px;
+  }
+  
+  header .logo {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+header.takibi{
+  padding-right: 110px;
+}
+
+    .yn-chart__display {
+      display: block; 
+    }
+    #y, #y-y, #y-n, #n-y, #n-n, #y-n-go, #y-n-n-i, #y-n-m, #y-n-n-i-y, #y-n-n-i-n, 
+    #y-y-y, #y-y-n, #y-n-y, #y-n-n, #n-y-y, #n-y-n, #n-n-y, #n-n-n,  
+    #y-y-y-n, #y-y-n-y, #y-y-n-n, #y-n-y-y, #y-n-y-n, #y-n-n-y, #y-n-n-n,  
+    #n-y-y-y, #n-y-y-n, #n-y-n-y, #n-y-n-n, #n-n-y-y, #n-n-y-n, #n-n-n-y, #n-n-n-n,
+    #y-n-n-n-y, #y-n-n-n-y-y, #r, #r-y, #r-y-n, #r-y-n-y, #r-y-n-n, #r-y-n-n-y, #r-y-n-n-n {
+      display: none;
+    }
+    .yn-chart__result img {
+    width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  @media screen and (max-width: 480px) {
+  .yn-chart__result img {
+    width: 90%;  /* 画面幅の90%に調整 */
+  }
+}
+  </style>
+
+
+<body>
+
+  <header>
+    <p class="logo">Home Cave</p>
+    <img class="takibi" src="cave.png" width="40" height="40">
+    <h1>あなたと共にあるサイト！</h1>
+  </header>
+
+  <div class="yn-chart">
+    <p class="yn-chart__add">診断</p>
+    <p class="yn-chart__title">名言</p>
+    <p class="yn-chart__ex">名言を授けます</p>
+
+    <!-- Q1 -->
+    <div id="q1" class="yn-chart__display">
+      <figure>あなたについて教えてください</figure>
+      <p>人生は辛いものだと思っている。</p>
+      <ul>
+        <li><a href="#y">はい</a></li>
+        <li><a href="#n">いいえ</a></li>
+      </ul>
+    </div>
+
+    <!-- y系 -->
+    <div id="y">
+      <figure>あなたについて教えてください</figure>
+      <p>人間関係がうまくいっていない。</p>
+      <ul>
+        <li><a href="#y-y">はい</a></li>
+        <li><a href="#y-n">いいえ</a></li>
+      </ul>
+    </div>
+   
+    <div id="y-n">
+        <figure>あなたについて教えてください</figure>
+        <p>何かすごく嫌なことがあった。</p>
+        <ul>
+          <li><a href="#y-n-go">はい</a></li>
+          <li><a href="#y-n-m">いいえ</a></li>
+        </ul>
+      </div>
+   
+      <div id="y-n-go">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/setoutijyoutoku.jpeg"></p>
+          <div>私は多く傷つき、多く苦しんだ人が好きです。挫折感の深い人は、その分、愛の深い人になります<br>by瀬戸内寂聴(小説家、尼僧）</div>
+        </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+
+    <div id="y-n-n">
+        <figure>あなたについて教えてください</figure>
+        <p>今、自分にとって大変なのは、</p>
+        <ul>
+          <li><a href="#y-n-n-y">部活</a></li>
+          <li><a href="#y-n-n-n">勉強</a></li>
+        </ul>
+      </div>
+
+      <div id="y-n-n-n">
+        <figure>あなたについて教えてください</figure>
+        <p>勉強自体が楽しくなくて、つらい。</p>
+        <ul>
+          <li><a href="#y-n-n-n-y">はい</a></li>
+          <li><a href="#y-n-n-n-n">いいえ</a></li>
+        </ul>
+      </div>
+    
+      <div id="y-n-n-n-y">
+        <figure>あなたについて教えてください</figure>
+        <p>勉強をせざるを得ない状況にある</p>
+        <ul>
+          <li><a href="#y-n-n-n-y-y">はい</a></li>
+          <li><a href="#y-n-n-n-y-n">いいえ</a></li>
+        </ul>
+      </div>
+    
+      <div id="y-n-n-n-y-n">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/setoutijyoutoku.jpeg"></p>
+          <div>もし、人より素晴らしい世界を見よう、そこにある宝にめぐり逢おうとするなら、どうしたって危険な道、恐い道を歩かねばなりません。そういう道を求めて歩くのが、才能に賭ける人の心構えなのです。<br>by瀬戸内寂聴(小説家、尼僧）</div>
+        </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+
+
+
+      <div id="y-n-n-n-y-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/matumotohitosi.jpg"></p>
+          <div>100点は無理かもしれん。でもMAXなら出せるやろ<br>by松本人志</div>
+        </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+
+      <div id="y-n-n-n-n">
+        <figure>あなたについて教えてください</figure>
+        <p>頑張ってもテストで結果が出なくて、つらい。</p>
+        <ul>
+          <li><a href="#y-n-n-n-n-y">はい</a></li>
+          <li><a href="#y-n-n-i">いいえ</a></li>
+        </ul>
+      </div>
+
+    <div id="y-n-n-n-n-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/kobibriant.jpeg"></p>
+          <div>君が諦めるとき、は他の誰かが勝利するときだ<br>byコービーブライアント</div>
+        </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+    </div>
+
+      <div id="y-n-n-y">
+        <figure>あなたについて教えてください</figure>
+        <p>自分の思うように部活の結果が出ていない。</p>
+        <ul>
+          <li><a href="#y-n-n-y-y">はい</a></li>
+          <li><a href="#y-n-n-y-n">いいえ</a></li>
+        </ul>
+      </div>
+      <div id="y-n-n-y-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/nomurakatuya.jpg"></p>
+          <div>やってみて『ダメだ』とわかったことと、はじめから『ダメだ』と言われたことは、違う<br>by野村克也</div>
+        </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+     </div>
+      <div id="y-n-n-y-n">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/matuokasyuzou.jpg"></p>
+          <div>真剣だからこそぶつかる壁がある by松岡修造</div>
+        </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+     </div>
+           
+      
+      <div id="y-n-m">
+        <figure>あなたについて教えてください</figure>
+        <p>お金がなく、自分がやりたいことができない</p>
+        <ul>
+          <li><a href="#y-n-m-y">はい</a></li>
+          <li><a href="#y-n-n">いいえ</a></li>
+        </ul>
+      </div>
+
+      <div id="y-n-m-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/william_ben.jpg"></p>
+          <div>貧しい身なりの謙遜と知とは立派な身なりの高慢と無知に勝るものである。<br>byウィリアム ベン</div>
+        </div>
+          <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+
+      <div id="y-n-n-i">
+        <figure>あなたについて教えてください</figure>
+        <p>インターネットに現実逃避してしまう</p>
+        <ul>
+          <li><a href="#y-n-n-i-y">はい</a></li>
+          <li><a href="#y-n-n-i-n">いいえ</a></li>
+        </ul>
+      </div>
+    
+
+      <div id="y-n-n-i-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/william.jpg"></p>
+          <div>苦しいから逃げるのではない。逃げるから苦しいのだ。<br>byウィリアム　ジェームス</div>
+        </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+      <div id="y-n-n-i-n">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/shakespere.jpg"></p>
+          <div>1分遅すぎるよりも、3時間早すぎるほうが良い。<br>byシェイクスピア</div>
+        </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+    <div id="y-y">
+      <figure>あなたについて教えてください</figure>
+      <p>家族よりも友達の方が気楽に話せる。</p>
+      <ul>
+        <li><a href="#y-y-y">はい</a></li>
+        <li><a href="#y-y-n">いいえ</a></li>
+      </ul>
+    </div>
+    
+    <div id="y-y-n">
+        <figure>あなたについて教えてください</figure>
+        <p>空気を読むのが息苦しい</p>
+        <ul>
+          <li><a href="#y-y-n-y">はい</a></li>
+          <li><a href="#r">いいえ</a></li>
+        </ul>
+      </div>
+      <div id="r">
+        <figure>あなたについて教えてください</figure>
+        <p>恋愛で悩んでいる</p>
+        <ul>
+          <li><a href="#r-y">はい</a></li>
+          <li><a href="#y-n-n">いいえ</a></li>
+        </ul>
+      </div>
+      <div id="r-y">
+        <figure>あなたについて教えてください</figure>
+        <p>片思いをしている</p>
+        <ul>
+          <li><a href="#r-y-y">はい</a></li>
+          <li><a href="#r-y-n">いいえ</a></li>
+        </ul>
+      </div>
+      <div id="r-y-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/naporeonn.jpg"></p>
+          <div>
+            じっくり考えろ。しかし、行動する時が来たなら、考えるのをやめて、進め<br>by ナポレオン・ボナパルト
+          </div>
+        </div>
+          <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+      <div id="r-y-n">
+        <figure>あなたについて教えてください</figure>
+        <p>最近、失恋した</p>
+        <ul>
+          <li><a href="#r-y-n-y">はい</a></li>
+          <li><a href="#r-y-n-n">いいえ</a></li>
+        </ul>
+      </div>
+      
+      <div id="r-y-n-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/gandi.jpg"></p>
+          <div>
+            臆病な者は愛を表明することができない。愛を表明するとは勇敢さの現れである。<br>byマハトマガンディー
+          </div>
+        </div>
+          <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+
+      <div id="r-y-n-n">
+        <figure>あなたについて教えてください</figure>
+        <p>彼氏、または彼女との関係がうまくいかない</p>
+        <ul>
+          <li><a href="#r-y-n-n-y">はい</a></li>
+          <li><a href="#r-y-n-n-n">いいえ</a></li>
+        </ul>
+      </div>
+
+      <div id="r-y-n-n-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/tokorojoji.jpg"></p>
+          <div>人間は頭がいいから、明日のこととか、来年のことを考えちゃうでしょ。そうじゃなくて、もうちょっとばかになって、今日のことしか考えられないと、幸せになりやすいのにね。<br>by所ジョージ
+          </div>
+        </div>
+          <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+     
+      <div id="r-y-n-n-n">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/tokorojoji.jpg"></p>
+          <div>人間は頭がいいから、明日のこととか、来年のことを考えちゃうでしょ。そうじゃなくて、もうちょっとばかになって、今日のことしか考えられないと、幸せになりやすいのにね。<br>by所ジョージ
+          </div>
+        </div>
+          <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+      <div id="y-y-n-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/taguti.jpg"></p>
+          <div>意志がない人ほど、軽く扱われ、主張しない人ほど雑に扱われる。自分の態度が相手の態度を決める。
+            <br>byたぐちひさと（作家）
+          </div>
+        </div>
+          <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+
+
+
+
+
+    <div id="y-y-y">
+        <figure>あなたについて教えてください</figure>
+        <p>親のしがらみが多い</p>
+        <ul>
+          <li><a href="#y-y-y-y">はい</a></li>
+          <li><a href="#y-y-y-n">いいえ</a></li>
+        </ul>
+      </div>
+      <div id="y-y-y-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/mayaanngerou.jpg"></p>
+          <div>大人になるとは、親のせいにするのを止めること。<br>byマヤ アンジェロウ（歌手）</div>
+        </div>
+          <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+
+   
+
+    <!-- n系 -->
+    <div id="n">
+      <figure>あなたについて教えてください</figure>
+      <p>毎日生きることは大変だが、やりがいや喜びを感じている。</p>
+      <ul>
+        <li><a href="#n-y">はい</a></li>
+        <li><a href="#n-n">いいえ</a></li>
+      </ul>
+    </div>
+
+    <div id="n-n">
+        <figure>あなたについて教えてください</figure>
+        <p>毎日が平和だが、何だか退屈だ。</p>
+        <ul>
+          <li><a href="#n-n-y">はい</a></li>
+          <li><a href="#n-n-n">いいえ</a></li>
+        </ul>
+      </div>
+     
+    <div id="n-n-y">
+        <figure>診断完了！</figure>
+       <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/hondakeisuke.jpg"></p>
+          <div>リスクのない人生なんて、逆にリスクだ。僕の人生なんて、リスクそのものなんで。<br>by本田圭佑（サッカー選手）</div>
+       </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+    </div>
+      
+      <div id="n-n-n">
+        <figure>あなたについて教えてください</figure>
+        <p>日々に感謝し、自分の生活に満足している</p>
+        <ul>
+          <li><a href="#n-n-n-y">はい</a></li>
+          <li><a href="#n-n-n-n">いいえ</a></li>
+        </ul>
+      </div>
+       
+      <div id="n-n-n-y">
+            <figure>診断完了！</figure>
+            <div class="yn-chart__result">
+              <p class="yn-chart__result-title">診断結果</p>
+              <p><img src="images/ruso.jpeg"></p>
+              <div>最も長生きした人間とは、最も年を経た人間のことではない。最も人生を楽しんだ人間のことである。<br>byルソー（哲学者） </div>
+            </div>
+            <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+
+      <div id="n-n-n-n">
+        <figure>あなたについて教えてください</figure>
+        <p>あなたは「いいえ」しか押す気がない。</p>
+        <ul>
+          <li><a href="#n-n-n-n-y">はい</a></li>
+          <li><a href="#n-n-n-n-y">いいえ</a></li>
+        </ul>
+      </div>
+     
+      <div id="n-n-n-n-y">
+        <figure>診断完了！</figure>
+        <div class="yn-chart__result">
+          <p class="yn-chart__result-title">診断結果</p>
+          <p><img src="images/okottahito.jpg"></p>
+          <div>何してんねん！</div>
+          </div>
+        <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+      </div>
+
+    <div id="n-y">
+      <figure>あなたについて教えてください</figure>
+      <p>自分のことが好きだ</p>
+      <ul>
+        <li><a href="#n-y-y">はい</a></li>
+        <li><a href="#n-y-n">いいえ</a></li>
+      </ul>
+    </div>
+
+    <div id="n-y-y">
+      <figure>診断完了！</figure>
+      <div class="yn-chart__result">
+        <p class="yn-chart__result-title">診断結果</p>
+        <p><img src="images/katukaisyu.jpg"></p>
+        <div>俺は本当に運がいい。なぜなら今まで生きている。<br>by勝海舟</div>
+      </div>
+      <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+    </div>
+
+    <div id="n-y-n">
+      <figure>診断完了！</figure>
+      <div class="yn-chart__result">
+        <p class="yn-chart__result-title">診断結果</p>
+        <p><img src="images/hiroyuki.jpg"></p>
+        <div>褒められたいっていうのを満たしたいのであれば,褒めてくださいって言った方がいいですよ。<br>byひろゆき</div>
+        </div>
+      <p class="p-check-btn"><a href="#q1">もう一度診断する</a></p>
+    </div>
+
+  </div>
+</body>
+</html>
+
+        

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ブロック崩し（アイテムでボール増加）</title>
+  <style>
+
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Hiragino Kaku Gothic ProN',Meiryo,sans-serif;background:#0b1220;color:#e6eef8}
+    .wrap{display:flex;flex-direction:column;align-items:center;padding:18px}
+    canvas{background:linear-gradient(180deg,#071428 0%, #082737 100%);border-radius:8px;box-shadow:0 8px 30px rgba(2,8,23,.6)}
+    .hud{width:720px;display:flex;justify-content:space-between;margin:12px 0}
+    .btn{background:#1f6feb;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
+    .info{font-size:14px;opacity:.9}
+    .center{display:flex;gap:8px}
+    #message{margin-top:12px;font-weight:700}
+    #bigClear, #bigOver{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      font-size:72px;font-weight:900;text-shadow:0 0 12px rgba(0,0,0,0.8);
+      display:none;pointer-events:none;
+      white-space:nowrap;
+    }
+    #bigClear{color:#ffd166;}
+    #bigOver{color:#ff4d4d;}
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <h2>ブロック崩し — アイテムでボールが増える</h2>
+    <div class="hud">
+      <div class="info">ボール: <span id="ballCount">1</span>　/　ブロック残り: <span id="blocksLeft">0</span></div>
+      <div class="center">
+        <button id="startBtn" class="btn">スタート/リスタート</button>
+        <button id="pauseBtn" class="btn">一時停止</button>
+      </div>
+    </div>
+
+    <div style="position:relative">
+      <canvas id="game" width="720" height="480"></canvas>
+      <div id="bigClear">CLEAR!</div>
+      <div id="bigOver">GAME OVER</div>
+    </div>
+    <div id="message"></div>
+    <p style="max-width:720px;opacity:.9">操作: マウス移動 または ← → / A D。ブロックを壊すと確率でアイテムが落ちます。アイテムを取るとボールが増えます。全てのブロックを壊すとクリア。</p>
+  </div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const startBtn = document.getElementById('startBtn');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const ballCountEl = document.getElementById('ballCount');
+  const blocksLeftEl = document.getElementById('blocksLeft');
+  const msgEl = document.getElementById('message');
+  const bigClearEl = document.getElementById('bigClear');
+  const bigOverEl = document.getElementById('bigOver');
+
+  let animationId = null;
+  let running = false;
+  let paused = false;
+
+  const paddle = { w: 100, h: 14, x: (W-100)/2, y: H-40, speed: 8 };
+
+  const cols = 10;
+  const rows = 5;
+  const blockPadding = 8;
+  const blockOffsetTop = 60;
+  const blockOffsetLeft = 35;
+  const blockWidth = Math.floor((W - blockOffsetLeft*2 - (cols-1)*blockPadding)/cols);
+  const blockHeight = 20;
+
+  let blocks = [];
+  let balls = [];
+  let items = [];
+
+  function resetLevel(){
+    blocks = [];
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        blocks.push({x:blockOffsetLeft + c*(blockWidth+blockPadding), y:blockOffsetTop + r*(blockHeight+blockPadding), w:blockWidth, h:blockHeight, hit:false});
+      }
+    }
+    updateBlocksLeft();
+    bigClearEl.style.display = 'none';
+    bigOverEl.style.display = 'none';
+  }
+
+  function spawnBall(x, y, vx, vy){
+    balls.push({x:x, y:y, r:8, vx:vx, vy:vy, stuck:false});
+    updateBallCount();
+  }
+
+  function updateBallCount(){ ballCountEl.textContent = balls.length; }
+  function updateBlocksLeft(){ blocksLeftEl.textContent = blocks.filter(b=>!b.hit).length; }
+
+  function startGame(){
+    resetLevel();
+    balls = [];
+    items = [];
+    spawnBall(W/2, paddle.y-20, 3*(Math.random()>0.5?1:-1), -4);
+    running = true; paused = false; msgEl.textContent = '';
+    if(animationId) cancelAnimationFrame(animationId);
+    loop();
+  }
+
+  function pauseGame(){
+    paused = !paused;
+    pauseBtn.textContent = paused ? '再開' : '一時停止';
+    if(!paused){ loop(); }
+  }
+
+  function rectIntersect(ax,ay,aw,ah,bx,by,bw,bh){
+    return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
+  }
+
+  function update(){
+    if(!running || paused) return;
+
+    for(let i=balls.length-1;i>=0;i--){
+      const b = balls[i];
+      b.x += b.vx; b.y += b.vy;
+      if(b.x - b.r < 0){ b.x = b.r; b.vx *= -1; }
+      if(b.x + b.r > W){ b.x = W - b.r; b.vx *= -1; }
+      if(b.y - b.r < 0){ b.y = b.r; b.vy *= -1; }
+
+      if(rectIntersect(b.x-b.r, b.y-b.r, b.r*2, b.r*2, paddle.x, paddle.y, paddle.w, paddle.h)){
+        const hitPos = (b.x - (paddle.x + paddle.w/2)) / (paddle.w/2);
+        const speed = Math.hypot(b.vx, b.vy);
+        const angle = hitPos * (Math.PI/3);
+        b.vx = speed * Math.sin(angle);
+        b.vy = -Math.abs(speed * Math.cos(angle));
+        b.y = paddle.y - b.r - 1;
+      }
+
+      for(const bl of blocks){
+        if(bl.hit) continue;
+        if(rectIntersect(b.x-b.r, b.y-b.r, b.r*2, b.r*2, bl.x, bl.y, bl.w, bl.h)){
+          bl.hit = true;
+          updateBlocksLeft();
+          b.vy *= -1;
+          if(Math.random() < 0.2){
+            items.push({x: bl.x + bl.w/2 - 10, y: bl.y + bl.h + 6, w:20, h:20, vy:2, type:'extraBall'});
+          }
+          break;
+        }
+      }
+
+      if(b.y - b.r > H){
+        balls.splice(i,1);
+        updateBallCount();
+      }
+    }
+
+    for(let i=items.length-1;i>=0;i--){
+      const it = items[i];
+      it.y += it.vy;
+      if(rectIntersect(it.x, it.y, it.w, it.h, paddle.x, paddle.y, paddle.w, paddle.h)){
+        spawnBall(paddle.x + paddle.w/2, paddle.y - 20, (Math.random()*2-1)*3, -4);
+        items.splice(i,1);
+      } else if(it.y > H){
+        items.splice(i,1);
+      }
+    }
+
+    const remaining = blocks.filter(b=>!b.hit).length;
+    if(remaining === 0){
+      running = false;
+      msgEl.textContent = 'ゲームクリア！リスタートで再挑戦できます。';
+      bigClearEl.style.display = 'block';
+      return;
+    }
+
+    if(balls.length === 0){
+      running = false;
+      msgEl.textContent = 'ゲームオーバー。スタートでリトライできます。';
+      bigOverEl.style.display = 'block';
+    }
+  }
+
+  function drawRoundedRect(x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const bl of blocks){
+      if(bl.hit) continue;
+      const idx = Math.floor((bl.y - blockOffsetTop) / (blockHeight + blockPadding));
+      const hue = 200 - idx*20;
+      ctx.fillStyle = `hsl(${hue} 60% 60%)`;
+      drawRoundedRect(bl.x, bl.y, bl.w, bl.h, 4);
+      ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.stroke();
+    }
+    ctx.fillStyle = '#e6eef8';
+    drawRoundedRect(paddle.x, paddle.y, paddle.w, paddle.h, 6);
+
+    for(const b of balls){
+      const g = ctx.createRadialGradient(b.x-3,b.y-3,1,b.x,b.y,b.r);
+      g.addColorStop(0,'#ffffff'); g.addColorStop(1,'#bfe6ff');
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fill();
+    }
+
+    for(const it of items){
+      ctx.fillStyle = '#ffd166';
+      drawRoundedRect(it.x, it.y, it.w, it.h, 6);
+      ctx.fillStyle = 'rgba(0,0,0,0.7)';
+      ctx.font = '12px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('+B', it.x + it.w/2, it.y + it.h/2 + 1);
+    }
+  }
+
+  function loop(){
+    update();
+    draw();
+    if(running && !paused){
+      animationId = requestAnimationFrame(loop);
+    }
+  }
+
+  let mouseX = null;
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    paddle.x = Math.min(Math.max(mouseX - paddle.w/2, 0), W - paddle.w);
+  });
+
+  const keys = {};
+  window.addEventListener('keydown', e => { keys[e.key] = true; });
+  window.addEventListener('keyup', e => { keys[e.key] = false; });
+
+  function keyboardMove(){
+    if(keys['ArrowLeft'] || keys['a'] || keys['A']){
+      paddle.x = Math.max(paddle.x - paddle.speed, 0);
+    }
+    if(keys['ArrowRight'] || keys['d'] || keys['D']){
+      paddle.x = Math.min(paddle.x + paddle.speed, W - paddle.w);
+    }
+  }
+
+  setInterval(() => {
+    if(!running || paused) return;
+    keyboardMove();
+  }, 16);
+
+  startBtn.addEventListener('click', startGame);
+  pauseBtn.addEventListener('click', pauseGame);
+
+  resetLevel();
+  draw();
+  msgEl.textContent = 'スタートボタンでゲーム開始';
+})();
+</script>
+</body>
+</html>
