@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>厳選写真集</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+      width: 100vw;
+      max-width: 430px; /* iPhone Pro Max 程度まで対応 */
+      margin: 0 auto;
+      background: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ヘッダー */
+    header {
+      width: 100%;
+      height: 60px;
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      box-sizing: border-box;
+    }
+    header .logo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    header .takibi {
+      width: 32px;
+      height: 32px;
+      margin-left: 6px;
+    }
+    header h1 {
+      font-size: 14px;
+      margin-left: auto;
+    }
+
+    /* ページ全体 */
+    .page {
+      padding: 12px;
+    }
+    h1 {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    p {
+      font-size: 14px;
+      margin: 4px 0 12px;
+    }
+
+    /* ギャラリー（スマホ縦で4列固定） */
+    .gallery {
+      display: grid;
+      grid-template-columns: 24% 24% 24% 24%;
+      column-gap: 8px;
+      row-gap: 6px;
+    }
+    
+    .thumb-wrap {
+      width: 100%;
+      height: 100px;
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: zoom-in;
+    }
+
+    /* ライトボックス */
+    .lightbox {
+      position: fixed;
+      inset: 0; /* top, right, bottom, left 全て0 */
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2147483647; /* 最前面に確実に表示 */
+    }
+    .lightbox.open { display: flex; }
+
+    .viewer {
+      position: relative;
+      width: 90vw;
+      height: 80vh;
+    }
+    .viewer img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    /* 閉じるボタン */
+    .close {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 20px;
+      background: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* ナビゲーション */
+    .nav {
+      position: absolute;
+      top: 0;
+      width: 30%;
+      height: 100%;
+    }
+    .nav.prev { left: 0; }
+    .nav.next { right: 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="logo">Home Cave</p>
+    <img class="takibi" src="cave.png" />
+    <h1>あなたと共にあるサイト！</h1>
+  </header>
+
+  <div class="page">
+    <h1>注目！厳選画像集</h1>
+    <p>気になる画像をタップ！</p>
+
+    <div class="gallery" id="gallery">
+      <div class="thumb-wrap"><img class="thumb" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=600&auto=format&fit=crop" data-full="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop" alt="海の風景" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/borabora.jpg" alt="ボラボラ" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=600&auto=format&fit=crop" data-full="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop" alt="森の朝" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/douro.jpg" alt="道路" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/hyouzan.jpeg" alt="パラディック洞窟" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/jinja.jpg" alt="鎌倉" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/kamakura.jpg" alt="スイス" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/kawasaki.jpg" alt="沖縄道路" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/maikura.jpg" alt="北海道" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/meteora.jpg" alt="京都" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/neza.jpg" alt="鳥居" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/piramiddo.jpg" alt="モルモット" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/rokku.jpg" alt="沖縄道路" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/saize.jpg" alt="猫" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/sanzu.jpg" alt="猫" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/sima.jpg" alt="猫" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/siro.jpg" alt="猫" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/supein1.jpg" alt="ペンギン" loading="lazy"></div> 
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/supein2.jpg" alt="石破茂" loading="lazy"></div> 
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/supein3.jpg" alt="カルシファー" loading="lazy"></div> 
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/tanada.jpg" alt="カルシファー" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/tenki.jpg" alt="カビゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/uyuni.jpg" alt="ウユニ塩湖" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/yama.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/susi.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/keeki.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/keeki2.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/neko.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/pengin.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/jirou.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/gyuudon.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/gyuudon2.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/frape.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/doonatu.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/juusu.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/fuji.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/pasta.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/aisu.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/pan.png" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/pan2.png" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/yakisoba.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/tonkatu.jpg" alt="ドラゴン" loading="lazy"></div>
+      <div class="thumb-wrap"><img class="thumb" src="picture_images/yakitori.jpg" alt="ドラゴン" loading="lazy"></div>
+    </div>
+  </div>
+
+  <!-- ライトボックス -->
+  <div class="lightbox" id="lightbox">
+    <div class="viewer">
+      <button class="close" id="btnClose">×</button>
+      <img id="viewerImg" src="" alt="">
+      <div class="nav prev" id="btnPrev"></div>
+      <div class="nav next" id="btnNext"></div>
+    </div>
+  </div>
+
+  <script>
+    const gallery = document.getElementById("gallery");
+    const lightbox = document.getElementById("lightbox");
+    const viewerImg = document.getElementById("viewerImg");
+    const btnClose = document.getElementById("btnClose");
+    const btnPrev = document.getElementById("btnPrev");
+    const btnNext = document.getElementById("btnNext");
+
+    const items = Array.from(gallery.querySelectorAll("img.thumb"));
+    let current = -1;
+
+    function openAt(i) {
+      current = i;
+      viewerImg.src = items[i].src;
+      lightbox.classList.add("open");
+    }
+    function closeViewer() {
+      lightbox.classList.remove("open");
+    }
+    function showNext() {
+      if (current < 0) return;
+      openAt((current + 1) % items.length);
+    }
+    function showPrev() {
+      if (current < 0) return;
+      openAt((current - 1 + items.length) % items.length);
+    }
+
+    items.forEach((img, i) => {
+      img.addEventListener("click", () => openAt(i));
+    });
+    btnClose.addEventListener("click", closeViewer);
+    btnNext.addEventListener("click", showNext);
+    btnPrev.addEventListener("click", showPrev);
+  </script>
+</body>
+</html>
